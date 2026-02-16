@@ -5,6 +5,9 @@ class Matrix:
 
 	def __init__(self, rows):
 
+		if not rows:
+			raise ValueError("Matrix can't be empty")
+
 		row_length = len(rows[0])
 		for row in rows:
 			if len(row) != row_length:
