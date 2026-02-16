@@ -31,3 +31,12 @@ def test_matmull():
 def test_determinant_squsre_matrix():
     M = SquareMatrix([[2, 2], [2, 2]])
     assert M.determinant == 0
+
+# def test_invalid_matesttrix_raises():
+#     with pytest.raises(ValueError):
+#         Matrix([7], [8,4])
+
+# def test_empty_matrix_raises():
+#     m = Matrix([])
+#     result = m * 10
+#     assert result.rows == []

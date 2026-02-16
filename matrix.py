@@ -1,7 +1,15 @@
+import copy
+
+
 class Matrix:
 
 	def __init__(self, rows):
-		self.rows = rows
+
+		row_length = len(rows[0])
+		for row in rows:
+			if len(row) != row_length:
+				raise ValueError('All rows of the matrix must have the same length!')
+		self.rows = copy.deepcopy(rows)
 
 
 	def same_size(self, other):
@@ -27,18 +35,18 @@ class Matrix:
 
 	def __sub__(self, other):
 			
-			if not self.same_size(other):
-				raise ValueError('Matrices must have the same dimensions')
+		if not self.same_size(other):
+			raise ValueError('Matrices must have the same dimensions')
 
-			result = []
+		result = []
 
-			for i in range(len(self.rows)):
-				row = []
-				for j in range(len(self.rows[i])):
-					row.append(self.rows[i][j] - other.rows[i][j])
-				result.append(row)
+		for i in range(len(self.rows)):
+			row = []
+			for j in range(len(self.rows[i])):
+				row.append(self.rows[i][j] - other.rows[i][j])
+			result.append(row)
 
-			return type(self)(result)
+		return type(self)(result)
 	
 	@property
 	def transpose(self):
@@ -98,6 +106,15 @@ class Matrix:
 
 		return type(self)(result)
 	
+	def __imul__(self, other):
+		if not isinstance(other,int):
+			raise TypeError('Can multiply only by a number!')
+		for i in range(len(self.rows)):
+			for j in range(len(self.rows[i])):
+				self.rows[i][j] *= other
+		return self
+	
+	
 
 class SquareMatrix(Matrix):
     def __init__(self, rows):
@@ -129,8 +146,9 @@ print(A * 2)
 print(2 * A)
 print(A)
 print(A @ V)
+print(A * 10)
 
-N = SquareMatrix([[10, 2], [2, 3]])
-print(N.determinant)
+# N = SquareMatrix([[10, 2], [2, 3]])
+# print(N.determinant)
 
 
