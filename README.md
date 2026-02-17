@@ -1,77 +1,134 @@
-# nested_getitem
+# Matrix and SquareMatrix
 
-A small utility function for retrieving values from nested Python data structures
-(lists and dictionaries) using a sequence of keys and/or indices.
+This project contains a simple implementation of matrix operations in Python and a test suite written with pytest.
 
-## Description
+## Files
 
-The `nested_getitem` function allows you to access elements inside nested `list`
-and `dict` objects by providing a path to the target element as a list or tuple.
+- `matrix.py` – implementation of the `Matrix` and `SquareMatrix` classes
+- `test_matrix.py` – unit tests for the matrix classes
 
-Conceptually, it is a safe and readable wrapper around chained indexing like:
+---
 
-```
-data[k1][k2][k3] ...
-```
+## matrix.py
 
-## Function signature
+### Matrix
 
-```python
-def nested_getitem(data: list | dict, keys: tuple | list) -> object:
-    ...
-```
+`Matrix` represents a 2D matrix based on a list of lists.
 
-- `data` — the source data structure (a list or a dictionary)
-- `keys` — a sequence of keys and/or indices describing the path
-- returns the extracted value
-
-## Implementation
+Example:
 
 ```python
-def nested_getitem(data: list | dict, keys: tuple | list) -> object:
-    current = data
-    for key in keys:
-        current = current[key]
-    return current
+from matrix import Matrix
+
+A = Matrix([[1, 2], [3, 4]])
 ```
 
-## Usage examples
+### Supported operations
+
+- Matrix addition
 
 ```python
-nested_getitem([99], (0,))
-# 99
-
-nested_getitem([[333, 555], [44, 22]], (0, 1))
-# 555
-
-nested_getitem({'a': 222}, ('a',))
-# 222
-
-nested_getitem({'a': {'b': 333}}, ('a', 'b'))
-# 333
-
-nested_getitem({'a': {'b': [88, 99]}}, ('a', 'b', 1))
-# 99
-
-nested_getitem([{}, {'c': 111}], (1, 'c'))
-# 111
+A + B
 ```
 
-## Purpose
+- Matrix subtraction
 
-This function is useful when working with:
+```python
+A - B
+```
 
-- JSON data
-- configuration files
-- API responses
-- deeply nested Python data structures
+- Multiplication by a number (scalar)
 
-## Limitations
+```python
+A * 2
+2 * A
+```
 
-The function does not perform additional validation of keys or indices.
-If the provided path is invalid, standard Python exceptions will be raised
-(`KeyError`, `IndexError`, or `TypeError`).
+- In‑place multiplication by a number
 
-## Requirements
+```python
+A *= 2
+```
 
-- Python 3.10+
+- Matrix multiplication (using the @ operator)
+
+```python
+A @ B
+```
+
+- Transpose (property)
+
+```python
+A.transpose
+```
+
+- Equality comparison
+
+```python
+A == B
+```
+
+### Validation
+
+- An empty matrix is not allowed.
+- All rows must have the same length.
+- Matrix addition and subtraction require matrices of the same size.
+- Matrix multiplication requires compatible shapes.
+
+---
+
+### SquareMatrix
+
+`SquareMatrix` is a subclass of `Matrix` and represents only square matrices.
+
+```python
+from matrix import SquareMatrix
+
+M = SquareMatrix([[1, 2], [3, 4]])
+```
+
+#### Determinant
+
+The determinant is available as a property and is currently implemented only for 2×2 matrices.
+
+```python
+M.determinant
+```
+
+---
+
+## test_matrix.py
+
+This file contains automated tests written with `pytest`.
+
+The tests cover:
+
+- matrix addition
+- matrix subtraction
+- multiplication by a scalar
+- transpose
+- matrix multiplication using `@`
+- determinant of a square matrix
+- validation errors for invalid and empty matrices
+
+---
+
+## How to run the tests
+
+Install pytest (if it is not installed):
+
+```bash
+pip install pytest
+```
+
+Run the tests from the project directory:
+
+```bash
+pytest
+```
+
+---
+
+## Python version
+
+Python 3.10 or newer is recommended.
