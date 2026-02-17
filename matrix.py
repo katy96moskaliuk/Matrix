@@ -135,23 +135,6 @@ class SquareMatrix(Matrix):
 
 	
 
-A = Matrix([[1,  2,  3], [4,  5, 6],])
-B = Matrix([[10, 20, 30], [40, 50, 60],])
-V = Matrix([[1, 2], [2, 4], [2, 2]])
-C = A + B
-D = B - A
-print(C.rows)
-print(D.rows)
-E = A.transpose
-print(E)
-print(A == B)
-print(A * 2)
-print(2 * A)
-print(A)
-print(A @ V)
-print(A * 10)
 
-# N = SquareMatrix([[10, 2], [2, 3]])
-# print(N.determinant)
 
 
